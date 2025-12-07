@@ -79,8 +79,6 @@ export function GameShell({ children }: { children?: React.ReactNode }) {
         </aside>
 
         <section className={styles.content}>
-          {children ?? <VideoPlayerShell />}
-
           <div className={styles.mobileBrowse}>
             <div className={styles.mobileBrowseLabel}>Browse</div>
             <div className={styles.mobileBrowseList}>
@@ -95,6 +93,7 @@ export function GameShell({ children }: { children?: React.ReactNode }) {
               ))}
             </div>
           </div>
+          {children ?? <VideoPlayerShell />}
 
           <div className={styles.recoGrid}>
             {RECOMMENDED.map((item, i) => (
