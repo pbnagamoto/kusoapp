@@ -70,3 +70,15 @@ export default function RootLayout({
     </html>
   );
 }
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "All you need is Playing",
+  description: "悪質広告バスターズ",
+  openGraph: {
+    title: "All you need is Playing",
+    description: "悪質広告バスターズ",
+    images: ["/og.png"],
+  },
+};
