@@ -1,0 +1,26 @@
+.card {
+  width: clamp(320px, 40vw, 420px);
+  aspect-ratio: 1 / 1;
+
+  display: block;
+  position: relative;
+
+  border-radius: 0.9rem;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+
+  opacity: 0;
+
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.mediaImg {
+  object-fit: cover;
+}

@@ -1,65 +1,170 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "@/styles/intro/IntroPage.module.css";
+
+const TITLE_VERB = "PLAY";
+
+const SLIDES = [
+  {
+    caption: "#1",
+    headline: "あなたはある動画サイトにいる",
+    lines: ["その目的はただ1つ", "動画を再生すること"],
+  },
+  {
+    caption: "#2",
+    headline: "立ちはだかるのは広告だけ",
+    lines: ["悪質広告を乗り越え", "再生アイコンを押せ",]
+  },
+  {
+    caption: "#3",
+    headline: "すべてがジョークだ",
+    lines: ["おおらかな心で見て", "最後まで楽しんでくれ"],
+  },
+];
+
+const AUTO_MS = 5000;
+
+export default function HomePage() {
+  const title = useMemo(() => `TUTORIAL`, []);
+
+  const router = useRouter();
+  const [index, setIndex] = useState(0);
+  const timerRef = useRef<number | null>(null);
+
+  const clearTimer = () => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
+
+  const scheduleNext = () => {
+    clearTimer();
+    timerRef.current = window.setTimeout(() => {
+      setIndex((v) => (v + 1) % SLIDES.length);
+    }, AUTO_MS);
+  };
+
+  const goNext = () => {
+    setIndex((v) => (v + 1) % SLIDES.length);
+  };
+
+  const startGame = () => {
+    router.push("/game");
+  };
+
+  useEffect(() => {
+    scheduleNext();
+    return clearTimer;
+  }, [index]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
+        goNext();
+      }
+      if (e.key.toLowerCase() === "s") {
+        startGame();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const slide = SLIDES[index];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className={styles.root} onClick={goNext}>
+      <div className={styles.topBar}>
+        <div className={styles.brand}>
+          <span className={styles.brandBadge}>Poron</span>
+          <span className={styles.brandMain}>Hub</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className={styles.topHint}>LOADING...</div>
+      </div>
+
+      <div className={styles.stageWrap}>
+        <div className={styles.stageFrame}>
+          <div className={styles.stageHeader}>
+            <div className={styles.stageTitle}></div>
+            <div className={styles.stageMeta}>
+            </div>
+          </div>
+
+          <div className={styles.stageScreen}>
+            <div className={styles.scanlines} />
+            <div className={styles.vignette} />
+
+            <div className={styles.gameTitle}>{title}</div>
+
+            <div className={styles.slideBox}>
+              <div className={styles.caption}>{slide.caption}</div>
+              <div className={styles.headline}>{slide.headline}</div>
+              <div className={styles.lines}>
+                {slide.lines.map((t, i) => (
+                  <div key={i} className={styles.line}>
+                    {t}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.progress}>
+              {SLIDES.map((_, i) => (
+                <span
+                  key={i}
+                  className={[
+                    styles.bar,
+                    i === index ? styles.barOn : "",
+                  ].join(" ")}
+                />
+              ))}
+            </div>
+
+            <div className={styles.ctaRow}>
+              <div className={styles.ctaButtons}>
+                <button
+                  type="button"
+                  className={styles.ctaButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goNext();
+                  }}
+                >
+                  NEXT
+                </button>
+
+                <button
+                  type="button"
+                  className={styles.ctaButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    startGame();
+                  }}
+                >
+                  START
+                </button>
+              </div>
+
+              <div className={styles.ctaBlink}>CLICK TO STRAT</div>
+            </div>
+          </div>
+
+          <div className={styles.stageFooter}>
+            <div className={styles.footerLeft}>
+              <span className={styles.footerDot} />
+              <span>Buf 99%</span>
+            </div>
+            <div className={styles.footerRight}>
+              <span className={styles.footerButton}></span>
+              <span className={styles.footerButton}></span>
+              <span className={styles.footerButton}></span>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

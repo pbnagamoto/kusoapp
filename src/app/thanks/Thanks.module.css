@@ -1,0 +1,79 @@
+.root {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2.5rem 1rem;
+  color: #f4f4f5;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(34, 197, 94, 0.18), transparent 45%),
+    linear-gradient(180deg, #000, #07070a, #000);
+}
+
+.panel {
+  width: min(720px, 92vw);
+  border-radius: 1.1rem;
+  border: 1px solid #27272a;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)),
+    #07070b;
+  box-shadow:
+    0 24px 80px rgba(0,0,0,0.7),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  padding: 2rem 1.6rem;
+  display: grid;
+  gap: 0.8rem;
+  text-align: center;
+}
+
+.caption {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: rgba(244,244,245,0.55);
+  text-transform: uppercase;
+}
+
+.headline {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+}
+
+.copy {
+  font-size: 0.95rem;
+  color: rgba(244,244,245,0.7);
+}
+
+.actions {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.buttonPrimary,
+.buttonGhost {
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonPrimary {
+  border: 1px solid rgba(34,197,94,0.85);
+  color: #04140a;
+  background:
+    linear-gradient(90deg, rgba(34,197,94,0.95), rgba(22,163,74,0.95));
+}
+
+.buttonGhost {
+  border: 1px solid #3f3f46;
+  color: #e4e4e7;
+  background: rgba(255,255,255,0.02);
+}

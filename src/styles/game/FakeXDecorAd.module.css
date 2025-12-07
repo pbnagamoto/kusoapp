@@ -1,0 +1,92 @@
+.card {
+  width: clamp(320px, 40vw, 420px);
+  border-radius: 0.9rem;
+  border: 1px solid #27272a;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+    #07070b;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  overflow: hidden;
+  position: relative;
+}
+
+.header {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid #1f1f26;
+  background: rgba(255,255,255,0.02);
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  color: #bbf7d0;
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #0b0b0f;
+  overflow: hidden;
+}
+
+.mediaImg {
+  object-fit: contain;
+  padding: 8px;
+}
+
+.fakeX {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 0.5rem;
+
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+
+  border: 1px solid rgba(244,244,245,0.18);
+  background: rgba(0,0,0,0.35);
+  color: #f4f4f5;
+
+  box-shadow:
+    0 0 12px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+
+  pointer-events: none;
+}
+
+.realClose {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+
+  font-size: 9px;
+  letter-spacing: 0.02em;
+
+  padding: 0.12rem 0.3rem;
+  border-radius: 0.25rem;
+
+  border: 1px solid rgba(244,244,245,0.08);
+  background: rgba(255,255,255,0.02);
+  color: rgba(244,244,245,0.5);
+
+  cursor: pointer;
+}
+
+.realClose:hover {
+  color: rgba(244,244,245,0.85);
+  border-color: rgba(244,244,245,0.2);
+}
